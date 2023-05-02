@@ -1,10 +1,15 @@
 <script setup>
   var vm = new Vue({
-    el: '#app',
+    el: '.login__container',
     data: {
       title: 'Entrar',
-      button: 'Criar conta',
+      button: 'Entrar',
+      a: 'Criar conta',
       stateStart: true,
+      form: {
+        email: '',
+        senha: ''
+      },
       style: {
         logo: {
           backgroundImage: 'url("src/assets/images/form-login.jpg")',
@@ -21,24 +26,29 @@
         }
       },
     },
+    mounted() {
+      console.log('Componente montado');
+    },
   })
 
   function changeForm() {    
     if (vm.stateStart) {
       vm.style.formContainer.left = '0';
       vm.style.logoContainer.left = '50%';
-      
-      vm.style.logo.backgroundImage = 'url("src/assets/images/form-login.jpg")';
-      vm.title = 'Entrar';
+
+      vm.style.logo.backgroundImage = 'url("src/assets/images/form-cadastro.jpg")';
+      vm.title = 'Criar conta';
       vm.button = 'Criar conta';
+      vm.a = 'Entrar';
       vm.stateStart = false;
     } else {
       vm.style.logoContainer.left = '0';
       vm.style.formContainer.left = '50%';
-      
-      vm.style.logo.backgroundImage = 'url("src/assets/images/form-cadastro.jpg")';
-      vm.title = 'Criar conta';
+
+      vm.style.logo.backgroundImage = 'url("src/assets/images/form-login.jpg")';
+      vm.title = 'Entrar';
       vm.button = 'Entrar';
+      vm.a = 'Criar conta';
       vm.stateStart = true;
     }
   }
@@ -54,15 +64,16 @@
         <h2 id="title">{{ vm.title }}</h2>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="input-person" id="email" placeholder="name@example.com">
+          <input v-model="vm.form.email" type="email" class="input-person" id="email" placeholder="name@example.com">
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Senha</label>
-          <input type="password" class="input-person" id="password" placeholder="**********">
+          <input v-model="vm.form.senha" type="password" class="input-person" id="password" placeholder="**********">
         </div>
-        <button type="submit" class="button-person">Entrar</button>
+        <button type="submit" class="button-person">{{ vm.button }}</button>
+        <p>{{ vm.form.email }}</p>
       </form>
-      <a href="#" v-on:click.native="changeForm()">{{ vm.button }}</a>
+      <a href="#" v-on:click="changeForm()">{{ vm.a }}</a>
     </div>
   </div>
 </template>
